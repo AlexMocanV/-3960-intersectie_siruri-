@@ -1,0 +1,72 @@
+#include <fstream>
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+using ui=unsigned int;
+
+ifstream cin("intersectie.in");
+ofstream cout("intersectie.out");
+
+vector<int>v;
+ui x,a,nr   ;
+
+unordered_map<int,bool>aparitie;
+unordered_map<int,int>mp;
+
+int main()
+{
+    bool ok=false;
+    while(cin>>x)
+    {
+        if(aparitie.find(x)!=aparitie.end()&&aparitie[x]!=ok)
+        {
+            aparitie[x]=ok;
+        }
+        nr++;
+        if(nr==1){
+            v.push_back(x);
+            aparitie[x]=true;
+            while(cin>>a&&a!=0)
+            {
+                aparitie[a]=true;
+                v.push_back(a);
+            }
+        }
+        else{
+            while(cin>>a&&a!=0)
+            {
+                if(aparitie.find(a)!=aparitie.end()&&aparitie[a]!=ok)
+                {
+                    aparitie[a]=ok;
+                }
+            }
+            for(ui i=0;i<v.size();i++)
+            {
+                if(aparitie.find(v[i])!=aparitie.end()&&aparitie[v[i]]==ok)
+                {
+                    //cout<<v[i]<<" ";
+                }
+                else if(aparitie.find(v[i])!=aparitie.end())
+                {
+                    aparitie.erase(v[i]);
+                    /*for (auto p : aparitie){ 
+                    cout << p.first << "==>" << p.second << " "; 
+                    
+                    }
+                    cout<< nr << "\n";*/
+                }
+            }
+            //cout<<"\n";            
+            ok=!(ok);
+        }
+    }
+    for(ui i=0;i<v.size();i++)
+    {
+        if(aparitie.find(v[i])!=aparitie.end()&&aparitie[v[i]]!=ok)
+        {
+            cout<<v[i]<<" ";
+        }
+    }
+    return 0;
+}//memoria e problema
